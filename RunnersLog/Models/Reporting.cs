@@ -11,5 +11,7 @@ namespace RunnersLog.Models
         public List<Run> Monthly { get; set; }
 
         public List<Run> Yearly { get; set; }
+
+        public int TopHeartRate { get; set; }
     }
 }
