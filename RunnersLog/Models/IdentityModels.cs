@@ -29,5 +29,7 @@ namespace RunnersLog.Models
         {
             return new ApplicationDbContext();
         }
+
+        public System.Data.Entity.DbSet<RunnersLog.Models.Run> Runs { get; set; }
     }
 }

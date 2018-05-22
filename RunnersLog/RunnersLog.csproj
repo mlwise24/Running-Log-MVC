@@ -192,12 +192,28 @@
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
+    <Compile Include="Controllers\RunsController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201805181005154_InitialCreate.cs" />
+    <Compile Include="Migrations\201805181005154_InitialCreate.Designer.cs">
+      <DependentUpon>201805181005154_InitialCreate.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201805181105034_dates.cs" />
+    <Compile Include="Migrations\201805181105034_dates.Designer.cs">
+      <DependentUpon>201805181105034_dates.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201805181151107_NewId.cs" />
+    <Compile Include="Migrations\201805181151107_NewId.Designer.cs">
+      <DependentUpon>201805181151107_NewId.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
+    <Compile Include="Models\Reporting.cs" />
+    <Compile Include="Models\Run.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>
@@ -258,6 +274,11 @@
     <Content Include="Views\Manage\VerifyPhoneNumber.cshtml" />
     <Content Include="Views\Shared\Lockout.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
+    <Content Include="Views\Runs\Create.cshtml" />
+    <Content Include="Views\Runs\Delete.cshtml" />
+    <Content Include="Views\Runs\Details.cshtml" />
+    <Content Include="Views\Runs\Edit.cshtml" />
+    <Content Include="Views\Runs\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -274,6 +295,17 @@
   <ItemGroup>
     <None Include="packages.config" />
     <Content Include="Scripts\jquery-1.10.2.min.map" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\201805181005154_InitialCreate.resx">
+      <DependentUpon>201805181005154_InitialCreate.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201805181105034_dates.resx">
+      <DependentUpon>201805181105034_dates.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201805181151107_NewId.resx">
+      <DependentUpon>201805181151107_NewId.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
