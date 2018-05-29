@@ -7,11 +7,8 @@ namespace RunnersLog.Models
 {
     public class Reporting
     {
-        public List<Run> Weekly { get; set; }
-        public List<Run> Monthly { get; set; }
+      
 
-        public List<Run> Yearly { get; set; }
-
-        public int TopHeartRate { get; set; }
+        public int TotalDistance { get; set; }
     }
 }
