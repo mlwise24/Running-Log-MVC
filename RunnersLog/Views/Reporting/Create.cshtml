@@ -4,7 +4,7 @@
     ViewBag.Title = "Create";
 }
 
-<h2>Create</h2>
+<h2>Filter Run stats by Date</h2>
 
 
 @using (Html.BeginForm("Create", "Reporting"))
@@ -34,7 +34,8 @@
     </div>
 
 
-    <p> Total Distance: @ViewBag.ad</p>
+    <p> Total Distance: @ViewBag.td</p>
+    <p> Total Calories: @ViewBag.tc</p>
 }
 
 @section Scripts {

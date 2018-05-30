@@ -18,19 +18,16 @@ namespace RunnersLog.Controllers
     public class ReportingController : Controller
     {
         private ApplicationDbContext db = new ApplicationDbContext();
+        
 
-        public DateTime? StartDate { get; set; }
-        public DateTime? EndDate { get; set; }
-
-        public int TotalDistance = 0;
-
-        public int TotalCalories { get; set; }
+        public int days3 { get; set; }
 
 
         // GET: Reporting/Details/5
         public ActionResult Index(DateTime? startDate, DateTime? endDate)
         {
-           
+            Reporting reporting = new Reporting();
+            
 
             var runs = from m in db.Runs
                 select m;
@@ -38,55 +35,62 @@ namespace RunnersLog.Controllers
             if (startDate != null && endDate != null)
             {
                 runs = runs.Where(s => s.Date >= startDate && s.Date <= endDate);
+
             }
 
-            var totalDistance = runs.Select(s => s.Distance).ToList();
-            var totalCalories = runs.Select(s => s.Calories).ToList();
-            TotalCalories = totalCalories.Sum();
-            TotalDistance = totalDistance.Sum();
-            ViewBag.td = TotalDistance;
-            ViewBag.tc = TotalCalories;
+           // var totalDistance = runs.Select(s => s.Distance).ToList();
+           // var totalCalories = runs.Select(s => s.Calories).ToList();
+           //
+            //reporting.TotalCalories = totalCalories.Sum();
+            //reporting.TotalDistance = totalDistance.Sum();
+           
+
+           // ViewBag.td = reporting.TotalDistance;
+           // ViewBag.tc = reporting.TotalCalories;
+         
             
 
             return View(runs);
 
-
-
         }
       
         // GET: Reporting/Create
-        public ActionResult Create(DateTime? startDate, DateTime? endDate)
+        [HttpGet]
+        public ActionResult Create()
         {
-           Reporting reporting = new Reporting();
-            reporting.TotalDistance = 0;
-           
-
-            var runs = from m in db.Runs
-                select m;
-
-            if (startDate != null && endDate != null)
-            {
-                runs = runs.Where(s => s.Date >= startDate && s.Date <= endDate);
-
-
-
-                var totalDistance = runs.Select(s => s.Distance).ToList();
-                reporting.TotalDistance = totalDistance.Sum();
-                ViewBag.ad = reporting.TotalDistance;
-            }
 
             return View();
         }
 
         // POST: Reporting/Create
         [HttpPost]
-        public ActionResult Create(FormCollection collection)
+        public ActionResult Create(DateTime? startDate, DateTime? endDate)
         {
             try
             {
-                // TODO: Add insert logic here
+                Reporting reporting = new Reporting();
+                reporting.TotalDistance = 0;
 
-                return RedirectToAction("Index");
+
+                var runs = from m in db.Runs
+                           select m;
+
+                if (startDate != null && endDate != null)
+                {
+                    runs = runs.Where(s => s.Date >= startDate && s.Date <= endDate);
+
+
+
+                    var totalDistance = runs.Select(s => s.Distance).ToList();
+                    reporting.TotalDistance = totalDistance.Sum();
+                    ViewBag.td = reporting.TotalDistance;
+
+                    var totalCalories = runs.Select(s => s.Calories).ToList();
+                    reporting.TotalCalories = totalCalories.Sum();
+                    ViewBag.tc = reporting.TotalCalories;
+                }
+
+                return View();
             }
             catch
             {

@@ -10,5 +10,9 @@ namespace RunnersLog.Models
       
 
         public int TotalDistance { get; set; }
+
+        public int TotalCalories { get; set; }
+
+        public int AverageHeart { get; set; }
     }
 }
