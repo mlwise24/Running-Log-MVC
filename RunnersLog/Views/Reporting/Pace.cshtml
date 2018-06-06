@@ -1,0 +1,54 @@
+﻿
+
+@{
+    ViewBag.Title = "Pace";
+}
+
+
+<h2 class="custom">Pace Calculator</h2>
+
+
+<p>
+    
+    Enter Distance in Km's
+    <input type="text" id="distance" />
+    Enter Time in Minutes
+    <input type="text" id="time" />
+    <input type="button" , id="calculatepacebutton" value="Submit" />
+</p>
+
+<div id="dataDiv"> </div>
+
+<script src="~/Scripts/jquery-1.10.2.js"></script>
+<script >
+    $(document).ready(function () {
+        
+
+        $("#calculatepacebutton").click(function (e) {
+            if ($("#distance").val() == "")
+                alert("Distance cant be empty.");
+            else if ($("#time").val() == "")
+                alert("Time cant be empty.");
+            else {
+                $.ajax({
+                    type: "POST",
+                    url: "/Reporting/CalculatePace",                    
+                    dataType: "html",
+                    data: { distance: $("#distance").val(), time: $("#time").val() },
+                    success: function (result) { $("#dataDiv").html(result + " min per km") },
+                    error: function () {
+                    alert("error")
+                    }
+                });
+            }
+
+            
+
+        });
+    });
+</script>
+
+
+
+
+

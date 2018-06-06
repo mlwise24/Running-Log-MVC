@@ -377,6 +377,7 @@
     <Content Include="Views\Runs\Index.cshtml" />
     <Content Include="Views\Reporting\Index.cshtml" />
     <Content Include="Views\Reporting\Create.cshtml" />
+    <Content Include="Views\Reporting\Pace.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

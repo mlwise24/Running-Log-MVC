@@ -4,7 +4,7 @@
     ViewBag.Title = "Create";
 }
 
-<h2>Filter Run stats by Date</h2>
+<h2 class="custom">Filter Run stats by date</h2>
 
 
 @using (Html.BeginForm("Create", "Reporting"))
@@ -36,6 +36,56 @@
 
     <p> Total Distance: @ViewBag.td</p>
     <p> Total Calories: @ViewBag.tc</p>
+    <hr />
+
+
+    <script src="~/Scripts/jquery-1.10.2.js"></script><!--this jquery library wasalready in the project - so I didn't even have to add it-->
+
+    <button id="calculateavgheart">Calculate Average heart Rate</button>
+    <div id="avgheart">...</div>
+    <script>
+        $("#calculateavgheart").click(function () {
+            $.ajax({
+                url: "calculateavgheart",
+                beforeSend: function (xhr) {
+                    xhr.overrideMimeType("text/plain; charset=x-user-defined");
+                }
+            })
+                .done(function (data) {
+                    $("#avgheart").text(data);
+                });
+        });
+    </script>
+    <hr />
+    <p> Average Pace: @ViewBag.ap</p>
+
+
+
+
+
+    <button id="calculateavgpacebutton">Calculate Average Pace</button>
+    <div id="avgpace">...</div>
+    <script>
+        $("#calculateavgpacebutton").click(function () {
+            $.ajax({
+                type: "POST",
+                url: "calculateavgpace",
+                data: { startDate: $("#startDate").val(), endDate: $("#endDate").val() },
+                beforeSend: function (xhr) {
+                    xhr.overrideMimeType("text/plain; charset=x-user-defined");
+                }
+            })
+                .done(function (data) {
+                    $("#avgpace").html(data);
+                });
+        });
+    </script>
+
+
+
+
+
+
 }
 
 @section Scripts {

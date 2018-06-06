@@ -18,11 +18,10 @@ namespace RunnersLog.Controllers
     public class ReportingController : Controller
     {
         private ApplicationDbContext db = new ApplicationDbContext();
+
         
-
-        public int days3 { get; set; }
-
-
+        int days = 0;
+        
         // GET: Reporting/Details/5
         public ActionResult Index(DateTime? startDate, DateTime? endDate)
         {
@@ -37,18 +36,6 @@ namespace RunnersLog.Controllers
                 runs = runs.Where(s => s.Date >= startDate && s.Date <= endDate);
 
             }
-
-           // var totalDistance = runs.Select(s => s.Distance).ToList();
-           // var totalCalories = runs.Select(s => s.Calories).ToList();
-           //
-            //reporting.TotalCalories = totalCalories.Sum();
-            //reporting.TotalDistance = totalDistance.Sum();
-           
-
-           // ViewBag.td = reporting.TotalDistance;
-           // ViewBag.tc = reporting.TotalCalories;
-         
-            
 
             return View(runs);
 
@@ -79,8 +66,6 @@ namespace RunnersLog.Controllers
                 {
                     runs = runs.Where(s => s.Date >= startDate && s.Date <= endDate);
 
-
-
                     var totalDistance = runs.Select(s => s.Distance).ToList();
                     reporting.TotalDistance = totalDistance.Sum();
                     ViewBag.td = reporting.TotalDistance;
@@ -88,6 +73,8 @@ namespace RunnersLog.Controllers
                     var totalCalories = runs.Select(s => s.Calories).ToList();
                     reporting.TotalCalories = totalCalories.Sum();
                     ViewBag.tc = reporting.TotalCalories;
+
+                    
                 }
 
                 return View();
@@ -96,6 +83,60 @@ namespace RunnersLog.Controllers
             {
                 return View();
             }
+        }
+
+        [HttpPost]
+        [Route("/calculateavgpace")]
+        public decimal CalculateAvgPace(DateTime? startDate, DateTime? endDate)
+        {
+            try
+            {
+
+                var runs = from m in db.Runs
+                           select m;
+
+                if (startDate != null && endDate != null)
+                {
+                    runs = runs.Where(s => s.Date >= startDate && s.Date <= endDate);
+
+                    var averagePace = runs.Select(s => s.Time).ToList();
+                    decimal totalTime = averagePace.Sum();
+                    var totalDistance = runs.Select(s => s.Distance).ToList();
+                    decimal TotalDistance = totalDistance.Sum();
+                    ViewBag.ap = totalTime / TotalDistance;
+                }
+                return ViewBag.ap;
+            }
+            catch
+            {
+                throw new Exception("Please enter the dates.");
+            }
+        }
+
+        [Route("/calculateavgheart")]
+        public int CalculateAvgHeart()
+        {
+
+
+            return 3;
+        }
+
+        public ActionResult Pace()
+        {
+          
+
+            return View();
+        }
+
+        [HttpPost]
+        [Route("/calculatepace")]
+        public decimal CalculatePace(string distance, string time)
+        {
+            
+            decimal Distance = Convert.ToDecimal(distance);
+            decimal Time = Convert.ToDecimal(time);
+            decimal answer = Time / Distance;
+            return answer;
         }
 
         // GET: Reporting/Edit/5
@@ -125,6 +166,7 @@ namespace RunnersLog.Controllers
         {
             return View();
         }
+
 
         // POST: Reporting/Delete/5
         [HttpPost]
