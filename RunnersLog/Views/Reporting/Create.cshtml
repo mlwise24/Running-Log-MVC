@@ -13,18 +13,18 @@
     <div id="resultstotal"></div>
 
     <div class="form-group">
-        <p>Start date (yyyy/mm/dd)</p>
-        @Html.TextBox("startDate")
+        <p class="custom">Start date</p>
+        @Html.TextBox("startDate", null,  new { @class = "form-control datepicker" } )
 
 
     </div>
 
 
     <div class="form-group">
-        <p>End date (yyyy/mm/dd)</p>
-        @Html.TextBox("endDate")
-
+        <p class="custom">End date</p>
+        @Html.TextBox("endDate", null, new { @class = "form-control datepicker" })
     </div>
+    
 
     <hr />
     <div class="form-group">
@@ -34,39 +34,59 @@
     </div>
 
 
-    <p> Total Distance: @ViewBag.td</p>
-    <p> Total Calories: @ViewBag.tc</p>
-    <hr />
 
-
-    <script src="~/Scripts/jquery-1.10.2.js"></script><!--this jquery library wasalready in the project - so I didn't even have to add it-->
-
-    <button id="calculateavgheart">Calculate Average heart Rate</button>
-    <div id="avgheart">...</div>
-    <script>
-        $("#calculateavgheart").click(function () {
-            $.ajax({
-                url: "calculateavgheart",
-                beforeSend: function (xhr) {
-                    xhr.overrideMimeType("text/plain; charset=x-user-defined");
-                }
-            })
-                .done(function (data) {
-                    $("#avgheart").text(data);
-                });
-        });
-    </script>
-    <hr />
-    <p> Average Pace: @ViewBag.ap</p>
+        <p class="custom"> Total Distance: @ViewBag.td</p>
+        <p class="custom"> Total Calories: @ViewBag.tc</p>
+        <hr />
 
 
 
 
+        <script src="~/Scripts/jquery-1.10.2.js"></script>
 
-    <button id="calculateavgpacebutton">Calculate Average Pace</button>
-    <div id="avgpace">...</div>
+        <input type="button" , id="calculateavgheart" value="Calculate average Heart rate" class="btn btn-primary" />
+        <hr />
+        <div id="avgheart">...</div>
+        <script>
+            $("#calculateavgheart").click(function () {
+
+                if ($("#startDate").val() == "")
+                    alert("Please enter a start date.");
+                else if ($("endDate").val() == "")
+                    alert("Please enter an end date.");
+
+                $.ajax({
+                    type: "POST",
+                    url: "calculateavgheart",
+                    data: { startDate: $("#startDate").val(), endDate: $("#endDate").val() },
+                    beforeSend: function (xhr) {
+                        xhr.overrideMimeType("text/plain; charset=x-user-defined");
+                    }
+                })
+                    .done(function (data) {
+                        $("#avgheart").html(data);
+                    });
+            });
+        </script>
+        <hr />
+
+
+
+
+        
+            <input type="button" , id="calculateavgpacebutton" value="Calculate average Pace" class="btn btn-primary" />
+            <hr />
+            <div id="avgpace">...</div>
+       
+    
     <script>
         $("#calculateavgpacebutton").click(function () {
+
+            if ($("#startDate").val() == "")
+                alert("Please enter a start date.");
+            else if ($("endDate").val() == "")
+                alert("Please enter an end date.");
+
             $.ajax({
                 type: "POST",
                 url: "calculateavgpace",
@@ -90,5 +110,11 @@
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
+    @Styles.Render("~/Content/bootstrap-datepicker.css")
+    @Scripts.Render("~/Scripts/bootstrap-datepicker.js")
+    <script type="text/javascript">
+        $(function () {
+            $('.datepicker').datepicker({});
+        });
+    </script>
 }
-

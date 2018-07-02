@@ -209,6 +209,14 @@
     <Compile Include="Migrations\201805181151107_NewId.Designer.cs">
       <DependentUpon>201805181151107_NewId.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201806150737324_idendity.cs" />
+    <Compile Include="Migrations\201806150737324_idendity.Designer.cs">
+      <DependentUpon>201806150737324_idendity.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201806281342277_runID.cs" />
+    <Compile Include="Migrations\201806281342277_runID.Designer.cs">
+      <DependentUpon>201806281342277_runID.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\IdentityModels.cs" />
@@ -405,6 +413,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201805181151107_NewId.resx">
       <DependentUpon>201805181151107_NewId.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201806150737324_idendity.resx">
+      <DependentUpon>201806150737324_idendity.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201806281342277_runID.resx">
+      <DependentUpon>201806281342277_runID.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

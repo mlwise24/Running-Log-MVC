@@ -16,16 +16,16 @@
 
 
     <div class="form-group">
-        <p>Start date (yyyy/mm/dd)</p>
-        @Html.TextBox("startDate")
+        <p>Start date</p>
+        @Html.TextBox("startDate", null, new { @class = "form-control datepicker" })
 
 
     </div>
 
 
     <div class="form-group">
-        <p>End date (yyyy/mm/dd)</p>
-        @Html.TextBox("endDate")
+        <p>End date</p>
+        @Html.TextBox("endDate", null, new { @class = "form-control datepicker" })
 
     </div>
 
@@ -38,7 +38,7 @@
 
 
 
-    <table class="table">
+    <table class="table table-dark table-striped">
         <tr>
             <th>
                 @Html.DisplayNameFor(model => model.Date)
@@ -59,7 +59,7 @@
         </tr>
 
         @foreach (var item in Model)
-    {
+        {
         <tr>
             <td>
                 @Html.DisplayFor(modelItem => item.Date)
@@ -78,22 +78,30 @@
             </td>
             <td>
         </tr>
-
+        }
+        </table>
 
 
 }
 
 
-        @section Scripts {
-            @Scripts.Render("~/bundles/jqueryval")
-            
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+            @Styles.Render("~/Content/bootstrap-datepicker.css")
+            @Scripts.Render("~/Scripts/bootstrap-datepicker.js")
+            <script type="text/javascript">
+        $(function () {
+            $('.datepicker').datepicker({});
+        });
+            </script>
 
-            
+
+
 
         }
 
-    </table>
+    
 
     
-}
+
 

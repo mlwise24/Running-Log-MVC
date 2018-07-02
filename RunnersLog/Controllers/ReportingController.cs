@@ -8,6 +8,7 @@ using System.Web;
 using System.Web.Mvc;
 using Microsoft.Ajax.Utilities;
 using RunnersLog.Models;
+using Microsoft.AspNet.Identity;
 
 
 
@@ -26,10 +27,12 @@ namespace RunnersLog.Controllers
         public ActionResult Index(DateTime? startDate, DateTime? endDate)
         {
             Reporting reporting = new Reporting();
-            
 
+            var loggedin = User.Identity.GetUserId();
+            
             var runs = from m in db.Runs
                 select m;
+            runs = runs.Where(s => s.RunId.ToString() == loggedin);
 
             if (startDate != null && endDate != null)
             {
@@ -58,9 +61,12 @@ namespace RunnersLog.Controllers
                 Reporting reporting = new Reporting();
                 reporting.TotalDistance = 0;
 
+                var loggedin = User.Identity.GetUserId();
 
                 var runs = from m in db.Runs
                            select m;
+
+                runs = runs.Where(s => s.RunId.ToString() == loggedin);
 
                 if (startDate != null && endDate != null)
                 {
@@ -91,9 +97,12 @@ namespace RunnersLog.Controllers
         {
             try
             {
+                var loggedin = User.Identity.GetUserId();
 
                 var runs = from m in db.Runs
                            select m;
+
+                runs = runs.Where(s => s.RunId.ToString() == loggedin);
 
                 if (startDate != null && endDate != null)
                 {
@@ -103,7 +112,7 @@ namespace RunnersLog.Controllers
                     decimal totalTime = averagePace.Sum();
                     var totalDistance = runs.Select(s => s.Distance).ToList();
                     decimal TotalDistance = totalDistance.Sum();
-                    ViewBag.ap = totalTime / TotalDistance;
+                    ViewBag.ap = Math.Round(totalTime / TotalDistance, 2);
                 }
                 return ViewBag.ap;
             }
@@ -114,11 +123,39 @@ namespace RunnersLog.Controllers
         }
 
         [Route("/calculateavgheart")]
-        public int CalculateAvgHeart()
+        public int CalculateAvgHeart(DateTime startDate, DateTime endDate)
         {
+            try
+            {
+                var loggedin = User.Identity.GetUserId();
+
+                var runs = from m in db.Runs
+                           select m;
+
+                runs = runs.Where(s => s.RunId.ToString() == loggedin);
 
 
-            return 3;
+                if (startDate != null && endDate != null)
+                {
+                    runs = runs.Where(s => s.Date >= startDate && s.Date <= endDate);
+
+
+                    var averageHeart = runs.Select(s => s.HeartRate).ToList();
+                    var days = averageHeart.Count;
+                    int totalHeart = averageHeart.Sum();
+                    
+                    ViewBag.ah = totalHeart / days;
+                }
+                return ViewBag.ah;
+            }
+            catch 
+            {
+                
+                throw new Exception("Please enter the dates.");
+                
+            }
+
+           
         }
 
         public ActionResult Pace()
@@ -135,8 +172,8 @@ namespace RunnersLog.Controllers
             
             decimal Distance = Convert.ToDecimal(distance);
             decimal Time = Convert.ToDecimal(time);
-            decimal answer = Time / Distance;
-            return answer;
+            decimal pace = Math.Round( Time / Distance, 2); 
+            return pace;
         }
 
         // GET: Reporting/Edit/5

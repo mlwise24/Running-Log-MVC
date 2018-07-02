@@ -7,6 +7,8 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using RunnersLog.Models;
+using Microsoft.AspNet.Identity;
+
 
 namespace RunnersLog.Controllers
 {
@@ -17,9 +19,11 @@ namespace RunnersLog.Controllers
         // GET: Runs
         public ActionResult Index(int? searchString)
         {
-
+            
+            var loggedin = User.Identity.GetUserId();
             var runs = from m in db.Runs
-                select m;
+                       select m;
+            runs = runs.Where(s => s.RunId.ToString() == loggedin);
 
             if (searchString != null)
             {
@@ -60,7 +64,12 @@ namespace RunnersLog.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.Runs.Add(run);
+                var loggedin = User.Identity.GetUserId();
+                
+                if (loggedin != null)
+                    
+                run.RunId = loggedin; 
+                db.Runs.Add(run);                             
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
